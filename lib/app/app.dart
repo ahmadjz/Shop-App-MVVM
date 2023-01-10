@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app_mvvm/presentation/theme_magner.dart';
 
 class MyApp extends StatefulWidget {
   MyApp._internal();
@@ -17,25 +18,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Shop App',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: getApplicationTheme(),
       home: Container(),
     );
-  }
-}
-
-class Test extends StatelessWidget {
-  const Test({super.key});
-
-  void updateAppState() {
-    MyApp().appState = 11;
-  }
-
-  void getAppState() {
-    print(MyApp().appState);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
