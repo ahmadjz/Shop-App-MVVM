@@ -22,7 +22,6 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Shop App',
       theme: getApplicationTheme(),
-      home: Container(),
     );
   }
 }
