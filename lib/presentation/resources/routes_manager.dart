@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app_mvvm/presentation/forgot_password/forgot_password_view.dart';
 import 'package:shop_app_mvvm/presentation/login/login_view.dart';
 import 'package:shop_app_mvvm/presentation/main/main_view.dart';
-import 'package:shop_app_mvvm/presentation/onboarding/onboarding_view.dart';
+import 'package:shop_app_mvvm/presentation/onboarding/view/onboarding_view.dart';
 import 'package:shop_app_mvvm/presentation/register/register_view.dart';
 import 'package:shop_app_mvvm/presentation/resources/strings_manager.dart';
 import 'package:shop_app_mvvm/presentation/splash/splash_view.dart';

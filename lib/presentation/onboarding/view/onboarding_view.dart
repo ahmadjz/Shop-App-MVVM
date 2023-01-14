@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app_mvvm/domain/models.dart';
+import 'package:shop_app_mvvm/presentation/onboarding/view_model/onboarding_view_model.dart';
 import 'package:shop_app_mvvm/presentation/resources/assets_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/color_manger.dart';
 import 'package:shop_app_mvvm/presentation/resources/constants_manager.dart';
@@ -17,35 +19,29 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-  late final List<SliderObject> _list = _getSliderData();
   final PageController _pageController = PageController();
-  int _currentIndex = 0;
+  final OnBoardingViewModel _onBoardingViewModel = OnBoardingViewModel();
 
-  List<SliderObject> _getSliderData() => [
-        SliderObject(
-          image: ImageAssets.onboardingLogo1,
-          subTitle: AppStrings.onBoardingSubTitle1,
-          title: AppStrings.onBoardingTitle1,
-        ),
-        SliderObject(
-          image: ImageAssets.onboardingLogo2,
-          subTitle: AppStrings.onBoardingSubTitle2,
-          title: AppStrings.onBoardingTitle2,
-        ),
-        SliderObject(
-          image: ImageAssets.onboardingLogo3,
-          subTitle: AppStrings.onBoardingSubTitle3,
-          title: AppStrings.onBoardingTitle3,
-        ),
-        SliderObject(
-          image: ImageAssets.onboardingLogo3,
-          subTitle: AppStrings.onBoardingSubTitle3,
-          title: AppStrings.onBoardingTitle3,
-        ),
-      ];
+  _bind() {
+    _onBoardingViewModel.start();
+  }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    _bind();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _onBoardingViewModel.dispose();
+    super.dispose();
+  }
+
+  Widget _getContentWidget(SliderViewObject? sliderViewObject) {
+    if (sliderViewObject == null) {
+      return Container();
+    }
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
@@ -57,16 +53,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       ),
       body: PageView.builder(
         controller: _pageController,
-        itemCount: _list.length,
+        itemCount: sliderViewObject.numberOfSlides,
         onPageChanged: (index) {
-          setState(
-            () {
-              _currentIndex = index;
-            },
-          );
+          _onBoardingViewModel.onPageChange(index);
         },
         itemBuilder: (context, index) {
-          return OnBoardingPage(_list[index]);
+          return OnBoardingPage(sliderViewObject.sliderObject);
         },
       ),
       bottomSheet: Container(
@@ -87,14 +79,24 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 ),
               ),
             ),
-            _getBottomSheetWidget()
+            _getBottomSheetWidget(sliderViewObject)
           ],
         ),
       ),
     );
   }
 
-  Widget _getBottomSheetWidget() {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<SliderViewObject>(
+      stream: _onBoardingViewModel.outputSliderViewObject,
+      builder: (context, snapshot) {
+        return _getContentWidget(snapshot.data);
+      },
+    );
+  }
+
+  Widget _getBottomSheetWidget(SliderViewObject sliderViewObject) {
     return Container(
       color: ColorManager.primary,
       child: Row(
@@ -106,7 +108,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             child: GestureDetector(
               onTap: () {
                 // go to previous slide
-                _pageController.animateToPage(_getPreviousIndex(),
+                _pageController.animateToPage(
+                    _onBoardingViewModel.goToPreviousSlide(),
                     duration: const Duration(
                         milliseconds: AppConstants.sliderAnimationTime),
                     curve: Curves.bounceInOut);
@@ -121,10 +124,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           // circle indicator
           Row(
             children: [
-              for (int i = 0; i < _list.length; i++)
+              for (int i = 0; i < sliderViewObject.numberOfSlides; i++)
                 Padding(
                   padding: const EdgeInsets.all(AppPadding.p8),
-                  child: _getProperCircle(i),
+                  child: _getProperCircle(i, sliderViewObject.currentIndex),
                 )
             ],
           ),
@@ -134,7 +137,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             child: GestureDetector(
               onTap: () {
                 // go to previous slide
-                _pageController.animateToPage(_getNextIndex(),
+                _pageController.animateToPage(
+                    _onBoardingViewModel.goToNextSlide(),
                     duration: const Duration(
                         milliseconds: AppConstants.sliderAnimationTime),
                     curve: Curves.bounceInOut);
@@ -151,28 +155,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  Widget _getProperCircle(int index) {
-    if (index == _currentIndex) {
+  Widget _getProperCircle(int index, int currentIndex) {
+    if (index == currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircleIc);
     } else {
       return SvgPicture.asset(ImageAssets.solidCircleIc);
     }
-  }
-
-  int _getPreviousIndex() {
-    int previousIndex = --_currentIndex;
-    if (previousIndex == -1) {
-      previousIndex = _list.length - 1;
-    }
-    return previousIndex;
-  }
-
-  int _getNextIndex() {
-    int nextIndex = ++_currentIndex ;
-    if (nextIndex == _list.length) {
-      nextIndex = 0;
-    }
-    return nextIndex;
   }
 }
 
@@ -208,15 +196,4 @@ class OnBoardingPage extends StatelessWidget {
       ],
     );
   }
-}
-
-class SliderObject {
-  String title;
-  String subTitle;
-  String image;
-  SliderObject({
-    required this.title,
-    required this.subTitle,
-    required this.image,
-  });
 }
