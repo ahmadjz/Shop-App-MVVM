@@ -21,3 +21,16 @@ class SliderViewObject {
     required this.currentIndex,
   });
 }
+
+// login models
+
+class Authentication {
+  String id;
+  String email;
+  int numOfNotification;
+  Authentication({
+    required this.id,
+    required this.email,
+    required this.numOfNotification,
+  });
+}
