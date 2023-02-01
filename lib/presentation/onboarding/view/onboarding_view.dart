@@ -1,8 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop_app_mvvm/domain/models.dart';
+import 'package:shop_app_mvvm/domain/model/models.dart';
 import 'package:shop_app_mvvm/presentation/onboarding/view_model/onboarding_view_model.dart';
 import 'package:shop_app_mvvm/presentation/resources/assets_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/color_manger.dart';

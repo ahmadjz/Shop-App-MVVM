@@ -1,7 +1,7 @@
 import 'package:shop_app_mvvm/app/constants.dart';
 import 'package:shop_app_mvvm/app/extensions.dart';
 import 'package:shop_app_mvvm/data/response/responses.dart';
-import 'package:shop_app_mvvm/domain/models.dart';
+import 'package:shop_app_mvvm/domain/model/models.dart';
 
 extension CustomerResponseMapper on CustomerResponse? {
   // from data layer to domain layer

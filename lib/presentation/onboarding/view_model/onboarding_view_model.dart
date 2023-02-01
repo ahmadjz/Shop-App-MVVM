@@ -1,7 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:shop_app_mvvm/domain/models.dart';
+import 'package:shop_app_mvvm/domain/model/models.dart';
 import 'package:shop_app_mvvm/presentation/base/base_view_model.dart';
 import 'package:shop_app_mvvm/presentation/resources/assets_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/strings_manager.dart';
