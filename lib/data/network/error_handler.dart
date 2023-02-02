@@ -183,3 +183,8 @@ class ResponseMessage {
       "Please check your internet connection";
   static const String defaultError = "Some thing went wrong, Try again later";
 }
+
+class ApiInternalStatus {
+  static const int success = 0;
+  static const int failure = 1;
+}

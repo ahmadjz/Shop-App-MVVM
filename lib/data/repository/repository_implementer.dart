@@ -2,6 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:shop_app_mvvm/data/data_source/remote_data_source.dart';
 import 'package:shop_app_mvvm/data/mapper/mapper.dart';
+import 'package:shop_app_mvvm/data/network/error_handler.dart';
 import 'package:shop_app_mvvm/data/network/failure.dart';
 import 'package:shop_app_mvvm/data/network/network_info.dart';
 import 'package:shop_app_mvvm/data/network/requests.dart';
@@ -19,24 +20,30 @@ class RepositoryImplementer implements Repository {
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
     if (await networkInfo.isConnected) {
-      final response = await remoteDataSource.login(loginRequest);
-
-      if (response.status == 0) {
-        return Right(response.toDomain());
-      } else {
+      try {
+        final response = await remoteDataSource.login(
+          loginRequest,
+        );
+        if (response.status == ApiInternalStatus.success) {
+          return Right(
+            response.toDomain(),
+          );
+        } else {
+          return Left(
+            Failure(
+              code: ApiInternalStatus.failure,
+              message: response.message ?? "business error",
+            ),
+          );
+        }
+      } catch (error) {
         return Left(
-          Failure(
-            code: 409,
-            message: response.message ?? "business error",
-          ),
+          ErrorHandler.handle(error).failure,
         );
       }
     } else {
       return Left(
-        Failure(
-          code: 501,
-          message: "please check your internet connection",
-        ),
+        DataSource.noInternetConnection.getFailure(),
       );
     }
   }
