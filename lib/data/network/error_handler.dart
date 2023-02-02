@@ -1,6 +1,46 @@
+import 'package:dio/dio.dart';
 import 'package:shop_app_mvvm/data/network/failure.dart';
 
+class ErrorHandler implements Exception {
+  late Failure failure;
+
+  ErrorHandler.handle(dynamic error) {
+    if (error is DioError) {
+      failure = _handleError(error);
+    } else {
+      failure = DataSource.defaultError.getFailure();
+    }
+  }
+}
+
+Failure _handleError(DioError error) {
+  switch (error.type) {
+    case DioErrorType.connectTimeout:
+      return DataSource.connectTimeOut.getFailure();
+    case DioErrorType.sendTimeout:
+      return DataSource.sendTimeOut.getFailure();
+    case DioErrorType.receiveTimeout:
+      return DataSource.sendTimeOut.getFailure();
+    case DioErrorType.cancel:
+      return DataSource.cancel.getFailure();
+    case DioErrorType.other:
+      return DataSource.defaultError.getFailure();
+    case DioErrorType.response:
+      // that means the error came from the api with an error code
+      if (error.response != null &&
+          error.response?.statusCode != null &&
+          error.response?.statusMessage != null) {
+        return Failure(
+            code: error.response?.statusCode ?? 0,
+            message: error.response?.statusMessage ?? "");
+      } else {
+        return DataSource.defaultError.getFailure();
+      }
+  }
+}
+
 enum DataSource {
+  defaultError,
   success,
   noContent,
   badRequest,
@@ -95,6 +135,11 @@ extension DataSourceExtension on DataSource {
           code: ResponseCode.noInternetConnection,
           message: ResponseMessage.noInternetConnection,
         );
+      case DataSource.defaultError:
+        return Failure(
+          code: ResponseCode.defaultError,
+          message: ResponseMessage.defaultError,
+        );
     }
   }
 }
@@ -115,7 +160,7 @@ class ResponseCode {
   static const int sendTimeOut = -4;
   static const int cacheError = -5;
   static const int noInternetConnection = -6;
-  static const int unKnown = -6;
+  static const int defaultError = -6;
 }
 
 class ResponseMessage {
@@ -136,5 +181,5 @@ class ResponseMessage {
   static const String cacheError = "Cache error, Try again later";
   static const String noInternetConnection =
       "Please check your internet connection";
-  static const String unKnown = "Some thing went wrong, Try again later";
+  static const String defaultError = "Some thing went wrong, Try again later";
 }
