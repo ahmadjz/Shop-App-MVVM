@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop_app_mvvm/app/dependency_injection.dart';
 import 'package:shop_app_mvvm/presentation/login/view_model/login_view_model.dart';
 import 'package:shop_app_mvvm/presentation/resources/assets_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/color_manger.dart';
@@ -6,20 +8,27 @@ import 'package:shop_app_mvvm/presentation/resources/routes_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/strings_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/values_manager.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
-  final LoginViewModel _loginViewModel = LoginViewModel(_loginUseCase);
+class _LoginViewState extends ConsumerState<LoginView> {
+  late LoginViewModel _loginViewModel;
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   _bind() {
+    _loginViewModel = LoginViewModel(
+      ref
+          .read(
+            myAppInitializersProvider,
+          )
+          .loginUseCase,
+    );
     _loginViewModel.start();
     _userNameController.addListener(
         () => _loginViewModel.setUserName(_userNameController.text));
@@ -30,7 +39,6 @@ class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
     _bind();
-
     super.initState();
   }
 
