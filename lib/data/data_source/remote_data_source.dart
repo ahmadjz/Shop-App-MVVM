@@ -7,9 +7,9 @@ abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
 }
 
-class RemoteDataSourceImplementation implements RemoteDataSource {
+class RemoteDataSourceImplementer implements RemoteDataSource {
   final AppServiceClient _appServiceClient;
-  RemoteDataSourceImplementation(
+  RemoteDataSourceImplementer(
     this._appServiceClient,
   );
 
