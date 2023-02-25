@@ -1,6 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../presentation/resources/langauge_manager.dart';
+import 'package:shop_app_mvvm/presentation/resources/language_manager.dart';
 
 const String prefsKeyLang = "PREFS_KEY_LANG";
 
