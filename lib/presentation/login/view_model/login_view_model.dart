@@ -12,8 +12,8 @@ class LoginViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController<String> _passwordStreamController =
       StreamController<String>.broadcast();
-  final StreamController<String> _areAllInputsValidStreamController =
-      StreamController<String>.broadcast();
+  final StreamController _areAllInputsValidStreamController =
+      StreamController<void>.broadcast();
   LoginObject loginObject = LoginObject("", "");
 
   @override
