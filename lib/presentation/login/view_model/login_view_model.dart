@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:shop_app_mvvm/domain/use_case/login_use_case.dart';
 import 'package:shop_app_mvvm/presentation/base/base_view_model.dart';
 import 'package:shop_app_mvvm/presentation/common/freezed_data_classes.dart';
+import 'package:shop_app_mvvm/presentation/common/state_renderer/state_renderer.dart';
+import 'package:shop_app_mvvm/presentation/common/state_renderer/state_renderer_implementer.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutputs {
@@ -18,13 +20,14 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void dispose() {
+    super.dispose();
     _userNameStreamController.close();
     _passwordStreamController.close();
   }
 
   @override
   void start() {
-    // TODO: implement start
+    inputState.add(ContentState());
   }
 
   @override
@@ -52,13 +55,27 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
+    inputState.add(
+      LoadingState(
+        stateRendererType: StateRendererType.popupLoadingState,
+      ),
+    );
     (await _loginUseCase.execute(
       LoginUseCaseInput(
         email: loginObject.userName,
         password: loginObject.password,
       ),
     ))
-        .fold((l) => null, (r) => null);
+        .fold(
+      (failure) => inputState.add(
+        ErrorState(
+            stateRendererType: StateRendererType.popupErrorState,
+            message: failure.message),
+      ),
+      (data) => inputState.add(
+        ContentState(),
+      ),
+    );
   }
 
   @override
