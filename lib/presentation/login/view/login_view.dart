@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shop_app_mvvm/app/providers/login_use_case_provider.dart';
-import 'package:shop_app_mvvm/presentation/animations/error_animation_view.dart';
-import 'package:shop_app_mvvm/presentation/animations/loading_animation_view.dart';
+import 'package:shop_app_mvvm/app/providers/my_app_modules.dart';
 import 'package:shop_app_mvvm/presentation/common/state_renderer/state_renderer_implementer.dart';
 import 'package:shop_app_mvvm/presentation/login/view_model/login_view_model.dart';
 import 'package:shop_app_mvvm/presentation/resources/assets_manager.dart';
@@ -24,17 +23,37 @@ class _LoginViewState extends ConsumerState<LoginView> {
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  _bind(LoginViewModel loginViewModel) {
-    _loginViewModel = loginViewModel;
+  _bind() {
+    _loginViewModel = LoginViewModel(
+      ref.read(myAppModulesProvider).initLoginUseCase(),
+    );
     _loginViewModel.start();
     _userNameController.addListener(
         () => _loginViewModel.setUserName(_userNameController.text));
     _passwordController.addListener(
         () => _loginViewModel.setPassword(_passwordController.text));
+    _loginViewModel.isUserLoggedInSuccessfullyStreamController.stream
+        .listen((isLoggedIn) {
+      if (isLoggedIn) {
+        SchedulerBinding.instance.addPostFrameCallback(
+          (_) {
+            ref
+                .read(
+                  myAppModulesProvider,
+                )
+                .appPreferences
+                .setUserLoggedIn();
+
+            Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+          },
+        );
+      }
+    });
   }
 
   @override
   void initState() {
+    _bind();
     super.initState();
   }
 
@@ -86,6 +105,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     stream: _loginViewModel.outIsPasswordValid,
                     builder: (context, snapshot) {
                       return TextFormField(
+                        obscureText: true,
                         keyboardType: TextInputType.visiblePassword,
                         controller: _passwordController,
                         decoration: InputDecoration(
@@ -156,28 +176,18 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final loginUseCase = ref.watch(loginUseCaseProvider);
-    return loginUseCase.when(
-      data: (data) {
-        _bind(
-          LoginViewModel(data),
-        );
-        return Scaffold(
-          backgroundColor: ColorManager.white,
-          body: StreamBuilder<FlowState>(
-            stream: _loginViewModel.outputState,
-            builder: (context, snapshot) {
-              return snapshot.data?.getScreenWidget(
-                      context: context,
-                      contentScreenWidget: _getContentWidget(),
-                      retryActionFunction: () {}) ??
-                  _getContentWidget();
-            },
-          ),
-        );
-      },
-      error: (error, stackTrace) => const ErrorAnimationView(),
-      loading: () => const LoadingAnimationView(),
+    return Scaffold(
+      backgroundColor: ColorManager.white,
+      body: StreamBuilder<FlowState>(
+        stream: _loginViewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data?.getScreenWidget(
+                  context: context,
+                  contentScreenWidget: _getContentWidget(),
+                  retryActionFunction: () {}) ??
+              _getContentWidget();
+        },
+      ),
     );
   }
 }

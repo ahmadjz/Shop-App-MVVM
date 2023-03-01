@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shop_app_mvvm/app/providers/my_app_modules.dart';
 import 'package:shop_app_mvvm/domain/model/models.dart';
 import 'package:shop_app_mvvm/presentation/onboarding/view_model/onboarding_view_model.dart';
 import 'package:shop_app_mvvm/presentation/resources/assets_manager.dart';
@@ -10,19 +12,25 @@ import 'package:shop_app_mvvm/presentation/resources/routes_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/strings_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/values_manager.dart';
 
-class OnBoardingView extends StatefulWidget {
+class OnBoardingView extends ConsumerStatefulWidget {
   const OnBoardingView({super.key});
 
   @override
-  State<OnBoardingView> createState() => _OnBoardingViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _OnBoardingViewState();
 }
 
-class _OnBoardingViewState extends State<OnBoardingView> {
+class _OnBoardingViewState extends ConsumerState<OnBoardingView> {
   final PageController _pageController = PageController();
   final OnBoardingViewModel _onBoardingViewModel = OnBoardingViewModel();
 
   _bind() {
     _onBoardingViewModel.start();
+    ref
+        .read(
+          myAppModulesProvider,
+        )
+        .appPreferences
+        .setOnBoardingScreenViewed();
   }
 
   @override
