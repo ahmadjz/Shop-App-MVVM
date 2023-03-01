@@ -47,4 +47,38 @@ class RepositoryImplementer implements Repository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, ForgotPasswordData>> forgotPassword(
+    ForgotPasswordRequest forgotPasswordRequest,
+  ) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final response = await remoteDataSource.forgotPassword(
+          forgotPasswordRequest,
+        );
+        print("HIIIIIIIIIIIIIIIII ${response.status}");
+        if (response.status == ApiInternalStatus.success) {
+          return Right(
+            response.toDomain(),
+          );
+        } else {
+          return Left(
+            Failure(
+              code: ApiInternalStatus.failure,
+              message: response.message ?? "business error",
+            ),
+          );
+        }
+      } catch (error) {
+        return Left(
+          ErrorHandler.handle(error).failure,
+        );
+      }
+    } else {
+      return Left(
+        DataSource.noInternetConnection.getFailure(),
+      );
+    }
+  }
 }

@@ -15,11 +15,13 @@ class AppStrings {
       "Tut app is an awesome flutter application using clean architecture #4";
   static const skip = "Skip";
   static const username = "Username";
+  static const email = "Email";
   static const password = "Password";
   static const usernameError = "Please enter your userName";
   static const passwordError = "Please enter your password";
+  static const emailError = "Please enter your email";
   static const login = "Login";
-  static const forgetPassword = "Forget password";
+  static const forgotPassword = "Forgot password";
   static const registerText = "Not a member ? Sign up";
   static const loading = "Loading...";
   static const retryAgain = "Retry again";

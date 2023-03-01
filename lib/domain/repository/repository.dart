@@ -5,4 +5,6 @@ import 'package:shop_app_mvvm/domain/model/models.dart';
 
 abstract class Repository {
   Future<Either<Failure, Authentication>> login(LoginRequest loginRequest);
+  Future<Either<Failure, ForgotPasswordData>> forgotPassword(
+      ForgotPasswordRequest forgotPasswordRequest);
 }

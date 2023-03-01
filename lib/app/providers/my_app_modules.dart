@@ -8,6 +8,7 @@ import 'package:shop_app_mvvm/data/network/dio_factory.dart';
 import 'package:shop_app_mvvm/data/network/network_info.dart';
 import 'package:shop_app_mvvm/data/repository/repository_implementer.dart';
 import 'package:shop_app_mvvm/domain/repository/repository.dart';
+import 'package:shop_app_mvvm/domain/use_case/forgot_password_use_case.dart';
 import 'package:shop_app_mvvm/domain/use_case/login_use_case.dart';
 
 class MyAppModules {
@@ -20,6 +21,7 @@ class MyAppModules {
   late RemoteDataSource remoteDataSource;
   late Repository repository;
   LoginUseCase? loginUseCase;
+  ForgotPasswordUseCase? forgotPasswordUseCase;
   Future<void> initAppModule() async {
     sharedPreferences = await SharedPreferences.getInstance();
     appPreferences = AppPreferences(sharedPreferences);
@@ -37,6 +39,12 @@ class MyAppModules {
   LoginUseCase initLoginUseCase() {
     loginUseCase = loginUseCase ?? LoginUseCase(repository);
     return loginUseCase!;
+  }
+
+  ForgotPasswordUseCase initForgotPasswordUseCase() {
+    forgotPasswordUseCase =
+        forgotPasswordUseCase ?? ForgotPasswordUseCase(repository);
+    return forgotPasswordUseCase!;
   }
 }
 

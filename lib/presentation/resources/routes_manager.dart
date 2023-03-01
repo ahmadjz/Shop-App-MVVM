@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app_mvvm/presentation/forgot_password/forgot_password_view.dart';
+import 'package:shop_app_mvvm/presentation/forgot_password/view/forgot_password_view.dart';
 import 'package:shop_app_mvvm/presentation/login/view/login_view.dart';
 import 'package:shop_app_mvvm/presentation/main/main_view.dart';
 import 'package:shop_app_mvvm/presentation/onboarding/view/onboarding_view.dart';

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // onBoarding Models
 
 class SliderObject {
@@ -52,5 +53,12 @@ class Authentication {
   Authentication({
     required this.customerResponse,
     required this.contactsResponse,
+  });
+}
+
+class ForgotPasswordData {
+  final String supportMessage;
+  ForgotPasswordData({
+    required this.supportMessage,
   });
 }

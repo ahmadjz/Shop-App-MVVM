@@ -59,6 +59,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   void dispose() {
+    _passwordController.dispose();
+    _userNameController.dispose();
     _loginViewModel.dispose();
     super.dispose();
   }
@@ -153,7 +155,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         Navigator.pushReplacementNamed(
                             context, Routes.forgotPasswordRoute);
                       },
-                      child: Text(AppStrings.forgetPassword,
+                      child: Text(AppStrings.forgotPassword,
                           style: Theme.of(context).textTheme.titleMedium),
                     ),
                     TextButton(

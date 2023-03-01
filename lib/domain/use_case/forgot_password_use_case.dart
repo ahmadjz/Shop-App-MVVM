@@ -5,26 +5,25 @@ import 'package:shop_app_mvvm/domain/model/models.dart';
 import 'package:shop_app_mvvm/domain/repository/repository.dart';
 import 'package:shop_app_mvvm/domain/use_case/base_use_case.dart';
 
-class LoginUseCase implements BaseUseCase<LoginUseCaseInput, Authentication> {
+class ForgotPasswordUseCase
+    implements BaseUseCase<ForgotPasswordUseCaseInput, ForgotPasswordData> {
   final Repository _repository;
-  LoginUseCase(
+  ForgotPasswordUseCase(
     this._repository,
   );
 
   @override
-  Future<Either<Failure, Authentication>> execute(
-      LoginUseCaseInput input) async {
-    return await _repository.login(
-      LoginRequest(email: input.email, password: input.password),
+  Future<Either<Failure, ForgotPasswordData>> execute(
+      ForgotPasswordUseCaseInput input) async {
+    return await _repository.forgotPassword(
+      ForgotPasswordRequest(email: input.email),
     );
   }
 }
 
-class LoginUseCaseInput {
+class ForgotPasswordUseCaseInput {
   String email;
-  String password;
-  LoginUseCaseInput({
+  ForgotPasswordUseCaseInput({
     required this.email,
-    required this.password,
   });
 }
