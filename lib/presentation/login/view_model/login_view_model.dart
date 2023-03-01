@@ -91,7 +91,7 @@ class LoginViewModel extends BaseViewModel
 
   @override
   Stream<bool> get outIsUserNameValid =>
-      _passwordStreamController.stream.map(_isUserNameValid);
+      _userNameStreamController.stream.map(_isUserNameValid);
 
   @override
   Stream<bool> get outAreAllInputsValid =>
