@@ -57,7 +57,6 @@ class RepositoryImplementer implements Repository {
         final response = await remoteDataSource.forgotPassword(
           forgotPasswordRequest,
         );
-        print("HIIIIIIIIIIIIIIIII ${response.status}");
         if (response.status == ApiInternalStatus.success) {
           return Right(
             response.toDomain(),

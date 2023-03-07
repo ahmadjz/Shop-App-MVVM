@@ -24,6 +24,21 @@ class LoadingState extends FlowState {
   StateRendererType getStateRendererType() => stateRendererType;
 }
 
+class SuccessState extends FlowState {
+  final StateRendererType stateRendererType;
+  final String message;
+  SuccessState({
+    required this.stateRendererType,
+    required this.message,
+  });
+
+  @override
+  String getMessage() => message;
+
+  @override
+  StateRendererType getStateRendererType() => stateRendererType;
+}
+
 class ErrorState extends FlowState {
   final StateRendererType stateRendererType;
   final String message;
@@ -103,6 +118,18 @@ extension FlowStateExtension on FlowState {
             );
           }
         }
+      case SuccessState:
+        {
+          _dismissDialog(context);
+          showPopup(
+            context,
+            stateRendererType: getStateRendererType(),
+            title: AppStrings.success,
+            message: getMessage(),
+          );
+          return contentScreenWidget;
+        }
+
       case EmptyState:
         {
           return StateRenderer(
@@ -137,6 +164,7 @@ extension FlowStateExtension on FlowState {
     BuildContext context, {
     required StateRendererType stateRendererType,
     required String message,
+    String title = "",
   }) {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => showDialog(
@@ -144,6 +172,7 @@ extension FlowStateExtension on FlowState {
         builder: (context) => StateRenderer(
           stateRendererType: stateRendererType,
           retryActionFunction: () {},
+          title: title,
           message: message,
         ),
       ),

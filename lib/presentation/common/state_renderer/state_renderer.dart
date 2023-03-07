@@ -15,7 +15,8 @@ enum StateRendererType {
   fullScreenLoadingState,
   fullScreenErrorState,
   fullScreenEmptyState,
-  contentState
+  contentState,
+  popupSuccessState,
 }
 
 class StateRenderer extends ConsumerWidget {
@@ -40,27 +41,53 @@ class StateRenderer extends ConsumerWidget {
     switch (stateRendererType) {
       case StateRendererType.popupLoadingState:
         return _getPopUpDialog(
-            context, [_getAnimatedImage(AnimationsAssets.loading)]);
+          context,
+          [
+            _getAnimatedImage(AnimationsAssets.loading),
+          ],
+        );
       case StateRendererType.popupErrorState:
-        return _getPopUpDialog(context, [
-          _getAnimatedImage(AnimationsAssets.error),
-          _getMessage(message),
-          _getRetryButton(AppStrings.ok, context)
-        ]);
+        return _getPopUpDialog(
+          context,
+          [
+            _getAnimatedImage(AnimationsAssets.error),
+            _getMessage(title),
+            _getMessage(message),
+            _getRetryButton(AppStrings.ok, context)
+          ],
+        );
       case StateRendererType.fullScreenLoadingState:
-        return _getItemsColumn([
-          _getAnimatedImage(AnimationsAssets.loading),
-          _getMessage(message)
-        ]);
+        return _getItemsColumn(
+          [_getAnimatedImage(AnimationsAssets.loading), _getMessage(message)],
+        );
       case StateRendererType.fullScreenErrorState:
-        return _getItemsColumn([
-          _getAnimatedImage(AnimationsAssets.error),
-          _getMessage(message),
-          _getRetryButton(AppStrings.retryAgain, context)
-        ]);
+        return _getItemsColumn(
+          [
+            _getAnimatedImage(AnimationsAssets.error),
+            _getMessage(message),
+            _getRetryButton(AppStrings.retryAgain, context)
+          ],
+        );
       case StateRendererType.fullScreenEmptyState:
         return _getItemsColumn(
-            [_getAnimatedImage(AnimationsAssets.empty), _getMessage(message)]);
+          [
+            _getAnimatedImage(AnimationsAssets.empty),
+            _getMessage(message),
+          ],
+        );
+      case StateRendererType.popupSuccessState:
+        return _getPopUpDialog(
+          context,
+          [
+            _getAnimatedImage(AnimationsAssets.success),
+            _getMessage(title),
+            _getMessage(message),
+            _getRetryButton(
+              AppStrings.ok,
+              context,
+            )
+          ],
+        );
       case StateRendererType.contentState:
         return Container();
       default:

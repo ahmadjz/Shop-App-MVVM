@@ -54,7 +54,9 @@ class ForgotPasswordViewModel extends BaseViewModel
       ),
       (data) => {
         inputState.add(
-          ContentState(),
+          SuccessState(
+              stateRendererType: StateRendererType.popupSuccessState,
+              message: data.supportMessage),
         ),
       },
     );

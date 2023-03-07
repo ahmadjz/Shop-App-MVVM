@@ -84,6 +84,7 @@ flutter:
     - assets/animations/empty2.json
     - assets/animations/error2.json
     - assets/animations/loading2.json
+    - assets/animations/success.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

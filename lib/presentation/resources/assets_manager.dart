@@ -17,4 +17,5 @@ class AnimationsAssets {
   static const String loading = "$jsonPath/loading2.json";
   static const String error = "$jsonPath/error2.json";
   static const String empty = "$jsonPath/empty2.json";
+  static const String success = "$jsonPath/success.json";
 }
