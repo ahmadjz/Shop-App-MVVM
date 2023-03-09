@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:shop_app_mvvm/app/functions.dart';
 import 'package:shop_app_mvvm/domain/use_case/forgot_password_use_case.dart';
 import 'package:shop_app_mvvm/presentation/base/base_view_model.dart';
 import 'package:shop_app_mvvm/presentation/common/freezed_data_classes.dart';
@@ -64,11 +65,7 @@ class ForgotPasswordViewModel extends BaseViewModel
 
   @override
   Stream<bool> get outIsEmailValid =>
-      _emailStreamController.stream.map(_isEmailValid);
-
-  bool _isEmailValid(String email) {
-    return email.isNotEmpty;
-  }
+      _emailStreamController.stream.map(isEmailValid);
 }
 
 abstract class ForgotPasswordModelInputs {

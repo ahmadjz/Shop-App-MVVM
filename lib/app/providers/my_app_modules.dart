@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app_mvvm/app/app_prefs.dart';
@@ -10,6 +11,7 @@ import 'package:shop_app_mvvm/data/repository/repository_implementer.dart';
 import 'package:shop_app_mvvm/domain/repository/repository.dart';
 import 'package:shop_app_mvvm/domain/use_case/forgot_password_use_case.dart';
 import 'package:shop_app_mvvm/domain/use_case/login_use_case.dart';
+import 'package:shop_app_mvvm/domain/use_case/register_use_case.dart';
 
 class MyAppModules {
   late SharedPreferences sharedPreferences;
@@ -22,6 +24,9 @@ class MyAppModules {
   late Repository repository;
   LoginUseCase? loginUseCase;
   ForgotPasswordUseCase? forgotPasswordUseCase;
+  RegisterUseCase? registerUseCase;
+  final ImagePicker imagePicker = ImagePicker();
+
   Future<void> initAppModule() async {
     sharedPreferences = await SharedPreferences.getInstance();
     appPreferences = AppPreferences(sharedPreferences);
@@ -45,6 +50,11 @@ class MyAppModules {
     forgotPasswordUseCase =
         forgotPasswordUseCase ?? ForgotPasswordUseCase(repository);
     return forgotPasswordUseCase!;
+  }
+
+  RegisterUseCase initRegisterUseCase() {
+    registerUseCase = registerUseCase ?? RegisterUseCase(repository);
+    return registerUseCase!;
   }
 }
 

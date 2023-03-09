@@ -26,5 +26,17 @@ class AppStrings {
   static const loading = "Loading...";
   static const retryAgain = "Retry again";
   static const ok = "Ok";
-  static const String success = "Success";
+  static const success = "Success";
+  static const emailHint = 'Email';
+  static const invalidEmail = "Email format is wrong";
+  static const resetPassword = "Reset Password";
+  static const userNameInvalid = "User name should be at least 8 chars";
+  static const mobileNumberInvalid = "Mobile should be at least 10 digits";
+  static const passwordInvalid = "Password should be at least 6 chars";
+  static const alreadyHaveAccount = "Already have an account ? Login";
+  static const register = "Register";
+  static const mobileNumber = "Mobile Number";
+  static const profilePicture = "Profile picture";
+  static const photoGallery = "Photo from galley";
+  static const photoCamera = "Photo from camera";
 }

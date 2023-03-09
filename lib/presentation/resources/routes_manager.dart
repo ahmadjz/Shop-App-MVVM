@@ -3,7 +3,7 @@ import 'package:shop_app_mvvm/presentation/forgot_password/view/forgot_password_
 import 'package:shop_app_mvvm/presentation/login/view/login_view.dart';
 import 'package:shop_app_mvvm/presentation/main/main_view.dart';
 import 'package:shop_app_mvvm/presentation/onboarding/view/onboarding_view.dart';
-import 'package:shop_app_mvvm/presentation/register/register_view.dart';
+import 'package:shop_app_mvvm/presentation/register/view/register_view.dart';
 import 'package:shop_app_mvvm/presentation/resources/strings_manager.dart';
 import 'package:shop_app_mvvm/presentation/splash/splash_view.dart';
 import 'package:shop_app_mvvm/presentation/store_details/store_details_view.dart';

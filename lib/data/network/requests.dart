@@ -14,3 +14,20 @@ class ForgotPasswordRequest {
     required this.email,
   });
 }
+
+class RegisterRequest {
+  String email;
+  String password;
+  String profilePicture;
+  String mobileNumber;
+  String countryMobileCode;
+  String userName;
+  RegisterRequest({
+    required this.email,
+    required this.password,
+    required this.profilePicture,
+    required this.mobileNumber,
+    required this.countryMobileCode,
+    required this.userName,
+  });
+}
