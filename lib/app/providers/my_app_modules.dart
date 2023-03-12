@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_app_mvvm/app/app_prefs.dart';
+import 'package:shop_app_mvvm/data/data_source/local_data_source.dart';
 import 'package:shop_app_mvvm/data/data_source/remote_data_source.dart';
 import 'package:shop_app_mvvm/data/network/app_api.dart';
 import 'package:shop_app_mvvm/data/network/dio_factory.dart';
@@ -22,6 +23,7 @@ class MyAppModules {
   late DioFactory dioFactory;
   late AppServiceClient appServiceClient;
   late RemoteDataSource remoteDataSource;
+  late LocalDataSource localDataSource;
   late Repository repository;
   final ImagePicker imagePicker = ImagePicker();
   LoginUseCase? loginUseCase;
@@ -37,10 +39,11 @@ class MyAppModules {
     dioFactory = DioFactory(appPreferences);
     appServiceClient = AppServiceClient(await dioFactory.getDio());
     remoteDataSource = RemoteDataSourceImplementer(appServiceClient);
+    localDataSource = LocalDataSourceImplementer();
     repository = RepositoryImplementer(
-      remoteDataSource: remoteDataSource,
-      networkInfo: networkInfo,
-    );
+        remoteDataSource: remoteDataSource,
+        networkInfo: networkInfo,
+        localDataSource: localDataSource);
   }
 
   LoginUseCase initLoginUseCase() {

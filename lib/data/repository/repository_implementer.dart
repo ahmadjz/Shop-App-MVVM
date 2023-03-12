@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
+import 'package:shop_app_mvvm/data/data_source/local_data_source.dart';
 import 'package:shop_app_mvvm/data/data_source/remote_data_source.dart';
 import 'package:shop_app_mvvm/data/mapper/mapper.dart';
 import 'package:shop_app_mvvm/data/network/error_handler.dart';
@@ -11,9 +12,11 @@ import 'package:shop_app_mvvm/domain/repository/repository.dart';
 
 class RepositoryImplementer implements Repository {
   final RemoteDataSource remoteDataSource;
+  final LocalDataSource localDataSource;
   final NetworkInfo networkInfo;
   RepositoryImplementer({
     required this.remoteDataSource,
+    required this.localDataSource,
     required this.networkInfo,
   });
   @override
@@ -115,30 +118,38 @@ class RepositoryImplementer implements Repository {
 
   @override
   Future<Either<Failure, HomeObject>> getHomeData() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final response = await remoteDataSource.getHomeData();
-        if (response.status == ApiInternalStatus.success) {
-          return Right(
-            response.toDomain(),
-          );
-        } else {
+    try {
+      final response = await localDataSource.getHomeData();
+      return Right(
+        response.toDomain(),
+      );
+    } catch (cacheError) {
+      if (await networkInfo.isConnected) {
+        try {
+          final response = await remoteDataSource.getHomeData();
+          if (response.status == ApiInternalStatus.success) {
+            localDataSource.saveHomeToCache(response);
+            return Right(
+              response.toDomain(),
+            );
+          } else {
+            return Left(
+              Failure(
+                code: ApiInternalStatus.failure,
+                message: response.message ?? "business error",
+              ),
+            );
+          }
+        } catch (error) {
           return Left(
-            Failure(
-              code: ApiInternalStatus.failure,
-              message: response.message ?? "business error",
-            ),
+            ErrorHandler.handle(error).failure,
           );
         }
-      } catch (error) {
+      } else {
         return Left(
-          ErrorHandler.handle(error).failure,
+          DataSource.noInternetConnection.getFailure(),
         );
       }
-    } else {
-      return Left(
-        DataSource.noInternetConnection.getFailure(),
-      );
     }
   }
 }
