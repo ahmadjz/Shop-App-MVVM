@@ -10,6 +10,7 @@ import 'package:shop_app_mvvm/data/network/network_info.dart';
 import 'package:shop_app_mvvm/data/repository/repository_implementer.dart';
 import 'package:shop_app_mvvm/domain/repository/repository.dart';
 import 'package:shop_app_mvvm/domain/use_case/forgot_password_use_case.dart';
+import 'package:shop_app_mvvm/domain/use_case/home_use_case.dart';
 import 'package:shop_app_mvvm/domain/use_case/login_use_case.dart';
 import 'package:shop_app_mvvm/domain/use_case/register_use_case.dart';
 
@@ -22,10 +23,11 @@ class MyAppModules {
   late AppServiceClient appServiceClient;
   late RemoteDataSource remoteDataSource;
   late Repository repository;
+  final ImagePicker imagePicker = ImagePicker();
   LoginUseCase? loginUseCase;
   ForgotPasswordUseCase? forgotPasswordUseCase;
   RegisterUseCase? registerUseCase;
-  final ImagePicker imagePicker = ImagePicker();
+  HomeUseCase? homeUseCase;
 
   Future<void> initAppModule() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -55,6 +57,11 @@ class MyAppModules {
   RegisterUseCase initRegisterUseCase() {
     registerUseCase = registerUseCase ?? RegisterUseCase(repository);
     return registerUseCase!;
+  }
+
+  HomeUseCase initHomeUseCase() {
+    homeUseCase = homeUseCase ?? HomeUseCase(repository);
+    return homeUseCase!;
   }
 }
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app_mvvm/presentation/main/pages/home_page.dart';
-import 'package:shop_app_mvvm/presentation/main/pages/notification_page.dart';
-import 'package:shop_app_mvvm/presentation/main/pages/search_page.dart';
-import 'package:shop_app_mvvm/presentation/main/pages/settings_page.dart';
+import 'package:shop_app_mvvm/presentation/main/pages/home/view/home_page_view.dart';
+import 'package:shop_app_mvvm/presentation/main/pages/notification/view/notification_page.dart';
+import 'package:shop_app_mvvm/presentation/main/pages/search/view/search_page.dart';
+import 'package:shop_app_mvvm/presentation/main/pages/settings/view/settings_page.dart';
 import 'package:shop_app_mvvm/presentation/resources/color_manger.dart';
 import 'package:shop_app_mvvm/presentation/resources/strings_manager.dart';
 import 'package:shop_app_mvvm/presentation/resources/values_manager.dart';
@@ -16,7 +16,7 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   List<Widget> pages = [
-    const HomePage(),
+    const HomePageView(),
     const SearchPage(),
     const NotificationPage(),
     const SettingsPage()
