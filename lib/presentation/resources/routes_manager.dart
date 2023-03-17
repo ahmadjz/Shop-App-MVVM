@@ -6,7 +6,7 @@ import 'package:shop_app_mvvm/presentation/onboarding/view/onboarding_view.dart'
 import 'package:shop_app_mvvm/presentation/register/view/register_view.dart';
 import 'package:shop_app_mvvm/presentation/resources/strings_manager.dart';
 import 'package:shop_app_mvvm/presentation/splash/splash_view.dart';
-import 'package:shop_app_mvvm/presentation/store_details/store_details_view.dart';
+import 'package:shop_app_mvvm/presentation/store_details/view/store_details_view.dart';
 
 class Routes {
   static const String splashRoute = "/";

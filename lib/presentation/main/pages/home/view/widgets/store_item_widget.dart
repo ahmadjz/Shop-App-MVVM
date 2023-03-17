@@ -14,7 +14,6 @@ class StoreItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // navigate to store details screen
         Navigator.of(context).pushNamed(Routes.storeDetailsRoute);
       },
       child: Card(

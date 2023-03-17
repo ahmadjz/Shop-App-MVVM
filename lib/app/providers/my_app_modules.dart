@@ -14,6 +14,7 @@ import 'package:shop_app_mvvm/domain/use_case/forgot_password_use_case.dart';
 import 'package:shop_app_mvvm/domain/use_case/home_use_case.dart';
 import 'package:shop_app_mvvm/domain/use_case/login_use_case.dart';
 import 'package:shop_app_mvvm/domain/use_case/register_use_case.dart';
+import 'package:shop_app_mvvm/domain/use_case/store_details_use_case.dart';
 
 class MyAppModules {
   late SharedPreferences sharedPreferences;
@@ -30,6 +31,7 @@ class MyAppModules {
   ForgotPasswordUseCase? forgotPasswordUseCase;
   RegisterUseCase? registerUseCase;
   HomeUseCase? homeUseCase;
+  StoreDetailsUseCase? storeDetailsUseCase;
 
   Future<void> initAppModule() async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -65,6 +67,12 @@ class MyAppModules {
   HomeUseCase initHomeUseCase() {
     homeUseCase = homeUseCase ?? HomeUseCase(repository);
     return homeUseCase!;
+  }
+
+  StoreDetailsUseCase initStoreDetailsUseCase() {
+    storeDetailsUseCase =
+        storeDetailsUseCase ?? StoreDetailsUseCase(repository);
+    return storeDetailsUseCase!;
   }
 }
 

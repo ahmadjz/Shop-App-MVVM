@@ -3,6 +3,8 @@ import 'package:shop_app_mvvm/data/response/responses.dart';
 
 const cacheHomeKey = "CACHE_HOME_KEY";
 const cacheHomeInterval = 60 * 1000;
+const cacheStoreDetailsKey = "CACHE_STORE_DETAILS_KEY";
+const cacheStoreDetailsInterval = 60 * 1000;
 
 abstract class LocalDataSource {
   Future<HomeResponse> getHomeData();
@@ -11,6 +13,10 @@ abstract class LocalDataSource {
   void clearCache();
 
   void removeFromCache(String key);
+
+  Future<StoreDetailsResponse> getStoreDetails();
+
+  Future<void> saveStoreDetailsToCache(StoreDetailsResponse response);
 }
 
 class LocalDataSourceImplementer implements LocalDataSource {
@@ -28,6 +34,22 @@ class LocalDataSourceImplementer implements LocalDataSource {
   @override
   Future<void> saveHomeToCache(HomeResponse homeResponse) async {
     cachedMap[cacheHomeKey] = CachedItem(data: homeResponse);
+  }
+
+  @override
+  Future<StoreDetailsResponse> getStoreDetails() async {
+    CachedItem? cachedItem = cachedMap[cacheStoreDetailsKey];
+
+    if (cachedItem != null && cachedItem.isValid(cacheStoreDetailsInterval)) {
+      return cachedItem.data;
+    } else {
+      throw ErrorHandler.handle(DataSource.cacheError);
+    }
+  }
+
+  @override
+  Future<void> saveStoreDetailsToCache(StoreDetailsResponse response) async {
+    cachedMap[cacheStoreDetailsKey] = CachedItem(data: response);
   }
 
   @override

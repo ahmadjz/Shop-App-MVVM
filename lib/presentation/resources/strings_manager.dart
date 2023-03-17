@@ -45,4 +45,7 @@ class AppStrings {
   static const settings = "Settings";
   static const services = "Services";
   static const stores = "Stores";
+  static const details = "Details";
+  static const about = "About Store";
+  static const storeDetails = "Store details";
 }
