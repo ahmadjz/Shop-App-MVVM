@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shop_app_mvvm/app/providers/my_app_modules.dart';
@@ -67,9 +68,9 @@ class _HomePageState extends ConsumerState<HomePageView> {
               BuildBannersSection(
                 banners: snapshot.data?.banners,
               ),
-              _getSection(AppStrings.services),
+              _getSection(AppStrings.services.tr()),
               BuildServicesSection(services: snapshot.data?.services),
-              _getSection(AppStrings.stores),
+              _getSection(AppStrings.stores.tr()),
               BuildStoresSection(stores: snapshot.data?.stores)
             ],
           );

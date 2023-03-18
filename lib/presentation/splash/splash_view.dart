@@ -66,7 +66,6 @@ class _SplashViewState extends ConsumerState<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.read(myAppModulesProvider).initAppModule();
     return Scaffold(
       backgroundColor: ColorManager.primary,
       body: const Center(

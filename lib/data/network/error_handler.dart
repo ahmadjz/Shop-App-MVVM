@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:shop_app_mvvm/data/network/failure.dart';
+import 'package:shop_app_mvvm/presentation/resources/strings_manager.dart';
 
 class ErrorHandler implements Exception {
   late Failure failure;
@@ -164,24 +166,22 @@ class ResponseCode {
 }
 
 class ResponseMessage {
-  static const String success = "success";
-  static const String noContent = "success";
-  static const String badRequest = "Bad request, Try again later";
-  static const String forbidden = "Forbidden request, Try again later";
-  static const String unAuthorized = "User is unauthorized, Try again later";
-  static const String notFound = "Some thing went wrong, Try again later";
-  static const String internetServerError =
-      "Some thing went wrong, Try again later";
+  static String success = AppStrings.success.tr();
+  static String noContent = AppStrings.success.tr();
+  static String badRequest = AppStrings.badRequestError.tr();
+  static String forbidden = AppStrings.forbiddenError.tr();
+  static String unAuthorized = AppStrings.unauthorizedError.tr();
+  static String notFound = AppStrings.notFoundError.tr();
+  static String internetServerError = AppStrings.internalServerError.tr();
 
   // local errors
-  static const String connectTimeOut = "Time out error, Try again later";
-  static const String cancel = "Request was cancelled, Try again later";
-  static const String receiveTimeOut = "Time out error, Try again later";
-  static const String sendTimeOut = "Time out error, Try again later";
-  static const String cacheError = "Cache error, Try again later";
-  static const String noInternetConnection =
-      "Please check your internet connection";
-  static const String defaultError = "Some thing went wrong, Try again later";
+  static String connectTimeOut = AppStrings.timeoutError.tr();
+  static String cancel = AppStrings.defaultError.tr();
+  static String receiveTimeOut = AppStrings.timeoutError.tr();
+  static String sendTimeOut = AppStrings.timeoutError.tr();
+  static String cacheError = AppStrings.cacheError.tr();
+  static String noInternetConnection = AppStrings.noInternetError.tr();
+  static String defaultError = AppStrings.defaultError.tr();
 }
 
 class ApiInternalStatus {

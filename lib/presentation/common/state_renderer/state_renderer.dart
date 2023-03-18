@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
@@ -53,7 +54,7 @@ class StateRenderer extends ConsumerWidget {
             _getAnimatedImage(AnimationsAssets.error),
             _getMessage(title),
             _getMessage(message),
-            _getRetryButton(AppStrings.ok, context)
+            _getRetryButton(AppStrings.ok.tr(), context)
           ],
         );
       case StateRendererType.fullScreenLoadingState:
@@ -65,7 +66,7 @@ class StateRenderer extends ConsumerWidget {
           [
             _getAnimatedImage(AnimationsAssets.error),
             _getMessage(message),
-            _getRetryButton(AppStrings.retryAgain, context)
+            _getRetryButton(AppStrings.retryAgain.tr(), context)
           ],
         );
       case StateRendererType.fullScreenEmptyState:
@@ -83,7 +84,7 @@ class StateRenderer extends ConsumerWidget {
             _getMessage(title),
             _getMessage(message),
             _getRetryButton(
-              AppStrings.ok,
+              AppStrings.ok.tr(),
               context,
             )
           ],

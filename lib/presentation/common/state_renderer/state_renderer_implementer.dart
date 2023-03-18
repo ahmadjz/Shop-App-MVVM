@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app_mvvm/app/constants.dart';
 import 'package:shop_app_mvvm/presentation/common/state_renderer/state_renderer.dart';
@@ -11,14 +12,11 @@ abstract class FlowState {
 
 class LoadingState extends FlowState {
   final StateRendererType stateRendererType;
-  final String message;
-  LoadingState({
-    required this.stateRendererType,
-    this.message = AppStrings.loading,
-  });
+  final String? message;
+  LoadingState({required this.stateRendererType, this.message});
 
   @override
-  String getMessage() => message;
+  String getMessage() => message ?? AppStrings.loading.tr();
 
   @override
   StateRendererType getStateRendererType() => stateRendererType;
@@ -124,7 +122,7 @@ extension FlowStateExtension on FlowState {
           showPopup(
             context,
             stateRendererType: getStateRendererType(),
-            title: AppStrings.success,
+            title: AppStrings.success.tr(),
             message: getMessage(),
           );
           return contentScreenWidget;

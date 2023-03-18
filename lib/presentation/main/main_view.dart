@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app_mvvm/presentation/main/pages/home/view/home_page_view.dart';
 import 'package:shop_app_mvvm/presentation/main/pages/notification/view/notification_page.dart';
@@ -22,13 +23,13 @@ class _MainViewState extends State<MainView> {
     const SettingsPage()
   ];
   List<String> titles = [
-    AppStrings.home,
-    AppStrings.search,
-    AppStrings.notifications,
-    AppStrings.settings,
+    AppStrings.home.tr(),
+    AppStrings.search.tr(),
+    AppStrings.notifications.tr(),
+    AppStrings.settings.tr(),
   ];
 
-  String _title = AppStrings.home;
+  String _title = AppStrings.home.tr();
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -54,30 +55,30 @@ class _MainViewState extends State<MainView> {
           unselectedItemColor: ColorManager.grey,
           currentIndex: _currentIndex,
           onTap: onTap,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(
+              icon: const Icon(
                 Icons.home_outlined,
               ),
-              label: AppStrings.home,
+              label: AppStrings.home.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
+              icon: const Icon(
                 Icons.search,
               ),
-              label: AppStrings.search,
+              label: AppStrings.search.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
+              icon: const Icon(
                 Icons.notifications,
               ),
-              label: AppStrings.notifications,
+              label: AppStrings.notifications.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(
+              icon: const Icon(
                 Icons.settings,
               ),
-              label: AppStrings.settings,
+              label: AppStrings.settings.tr(),
             ),
           ],
         ),

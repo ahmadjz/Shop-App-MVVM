@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shop_app_mvvm/app/providers/my_app_modules.dart';
@@ -65,11 +66,11 @@ class _ForgotPasswordState extends ConsumerState<ForgotPasswordView> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
                       decoration: InputDecoration(
-                          hintText: AppStrings.email,
-                          labelText: AppStrings.email,
+                          hintText: AppStrings.emailHint.tr(),
+                          labelText: AppStrings.emailHint.tr(),
                           errorText: (snapshot.data ?? true)
                               ? null
-                              : AppStrings.emailError),
+                              : AppStrings.invalidEmail.tr()),
                     );
                   },
                 ),
@@ -95,7 +96,7 @@ class _ForgotPasswordState extends ConsumerState<ForgotPasswordView> {
                                   _forgotPasswordViewModel.forgotPassword();
                                 }
                               : null,
-                          child: const Text(AppStrings.forgotPassword)),
+                          child: Text(AppStrings.forgotPassword.tr())),
                     );
                   },
                 ),
